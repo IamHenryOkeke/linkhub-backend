@@ -45,7 +45,7 @@ A backend API for a Linktree-like service where users can create a profile page 
 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/linktree-clone-backend.git
+git clone git@github.com:IamHenryOkeke/linktree-backend-clone.git
 cd linktree-clone-backend
 ```
 
@@ -64,8 +64,6 @@ DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
 JWT_SECRET=your_jwt_secret
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
 SMTP_USER=your_email@example.com
 SMTP_PASS=email_password
 FRONTEND_URL=http://localhost:3000
@@ -88,12 +86,16 @@ npm run dev
 
 ## API Endpoints
 
-| Method | Endpoint                | Description                           | Auth Required |
-| ------ | ----------------------- | ------------------------------------- | ------------- |
-| POST   | `/auth/signup`          | Register a new user                   | No            |
-| POST   | `/auth/login`           | Login with email and password         | No            |
-| GET    | `/auth/google`          | Initiate Google OAuth login           | No            |
-| GET    | `/auth/google/callback` | Google OAuth callback                 | No            |
+| Method | Endpoint                          | Description                             | Auth Required |
+| ------ | --------------------------------- | --------------------------------------- | ------------- |
+| POST   | `/auth/sign-up`                   | Register a new user with email/password | No            |
+| GET    | `/auth/verify-account`            | Verify user email via token link        | No            |
+| POST   | `/auth/request-verification-link` | Request a new email verification link   | No            |
+| POST   | `/auth/login`                     | Login with email and password           | No            |
+| POST   | `/auth/request-password-reset`    | Request a password reset email          | No            |
+| POST   | `/auth/reset-password`            | Reset user password with valid token    | No            |
+| GET    | `/auth/google`                    | Initiate Google OAuth login             | No            |
+| GET    | `/auth/google/callback`           | Google OAuth callback and JWT issuance  | No            |
 | GET    | `/user/profile`         | Get authenticated user profile        | Yes           |
 | POST   | `/links`                | Create a new link                     | Yes           |
 | GET    | `/links`                | Get all links for authenticated user  | Yes           |
