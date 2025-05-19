@@ -1,0 +1,171 @@
+import { AppError } from '../error/errorHandler';
+import { Prisma } from '../generated/prisma';
+import prisma from '../lib/prisma';
+
+export async function getUserByEmail(email: string) {
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error occured while finding user by email', error.message);
+    } else {
+      console.error('Error occured while finding user by email', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function getUserByUsername(username: string) {
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        username,
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(
+        'Error occured while finding user by username',
+        error.message,
+      );
+    } else {
+      console.error('Error occured while finding user by username:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function getUserById(id: string) {
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error occured while finding user by id', error.message);
+    } else {
+      console.error('Error occured while finding user by id', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function getUserByGoogleId(googleId: string) {
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        googleId,
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(
+        'Error occured while finding user by google id',
+        error.message,
+      );
+    } else {
+      console.error('Error occured while finding user by google id', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function createUser(values: Prisma.UserCreateInput) {
+  try {
+    const data = await prisma.user.create({
+      data: values,
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error creating new user:', error.message);
+    } else {
+      console.error('Error creating new user:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function updateUser(id: string, values: Prisma.UserUpdateInput) {
+  try {
+    const data = await prisma.user.update({
+      where: { id },
+      data: values,
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error updating user:', error.message);
+    } else {
+      console.error('Error updating user:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function createPasswordResetToken(
+  values: Prisma.PasswordResetTokenCreateInput,
+) {
+  try {
+    const data = await prisma.passwordResetToken.create({
+      data: values,
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error creating token:', error.message);
+    } else {
+      console.error('Error creating token:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function getPasswordResetTokenByHashedToken(tokenHash: string) {
+  try {
+    const data = await prisma.passwordResetToken.findFirst({
+      where: {
+        tokenHash,
+        expiresAt: {
+          gt: new Date(),
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error getting token:', error.message);
+    } else {
+      console.error('Error getting token:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function deletePasswordResetToken(userId: string) {
+  try {
+    const data = await prisma.passwordResetToken.deleteMany({
+      where: {
+        userId,
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error creating token:', error.message);
+    } else {
+      console.error('Error creating token:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}

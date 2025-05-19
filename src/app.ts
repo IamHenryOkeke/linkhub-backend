@@ -1,16 +1,21 @@
 import express, { Request, Response, NextFunction } from 'express';
-import dotenv from 'dotenv';
-import router from './routes/index.routes';
+import passport from './config/passport-config';
 import { CustomError } from './lib/type';
-
+import dotenv from 'dotenv';
+import indexRouter from './routes/index.routes';
+import authRouter from './routes/auth.routes';
 dotenv.config();
+
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(passport.initialize());
+
 // Use routes
-app.use('/', router);
+app.use('/api/auth', authRouter);
+app.use('/api', indexRouter);
 
 // 404 handler
 app.use((req, res) => {
