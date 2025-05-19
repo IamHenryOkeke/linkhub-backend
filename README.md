@@ -108,13 +108,15 @@ npm run dev
 ## Project Structure
 
 ```
+/prisma
+  schema.prisma    # Prisma database schema
 /src
   /controllers      # Route controllers
   /middlewares      # Middleware for auth, error handling, etc.
   /routes           # Express routes
-  /utils            # Utility functions (JWT, email, encryption)
-  prisma.schema     # Prisma database schema
-  server.ts         # Entry point
+  /lib              # Utility functions (JWT, encryption, prisma client)
+  /utils            # Utility functions (email, zod schema)
+  app.ts         # Entry point
 ```
 
 ---
