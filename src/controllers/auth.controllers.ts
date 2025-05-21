@@ -92,6 +92,9 @@ export const userLogin = expressAsyncHandler(
     }
 
     if (!isExistingUser.password) {
+      if (isExistingUser.googleId) {
+        throw new AppError('Please login with Google.', 400);
+      }
       throw new AppError('Invalid credentials', 401);
     }
 
