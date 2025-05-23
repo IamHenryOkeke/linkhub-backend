@@ -17,7 +17,7 @@ userRouter.put(
   '/profile',
   isAuthenticated,
   upload.single('avatar'),
-  addFilePathToBody,
+  addFilePathToBody('avatar'),
   validate({ body: updateUserProfileSchema }),
   updateCurrentUser,
 );
