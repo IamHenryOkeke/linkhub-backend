@@ -318,3 +318,43 @@ export async function deleteUserLink(id: string, userId: string) {
     throw new AppError('Internal server error', 500);
   }
 }
+
+export async function getUserPublicProfileWithLinksByUsername(
+  username: string,
+) {
+  try {
+    const data = await prisma.user.findUnique({
+      where: { username },
+      select: {
+        id: true,
+        username: true,
+        name: true,
+        bio: true,
+        avatar: true,
+        links: {
+          where: {
+            isActive: true,
+          },
+          select: {
+            id: true,
+            title: true,
+            url: true,
+            description: true,
+            imageUrl: true,
+          },
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(
+        'Error occurred while finding user by username:',
+        error.message,
+      );
+    } else {
+      console.error('Error occurred while finding user by username:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
