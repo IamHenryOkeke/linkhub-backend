@@ -91,6 +91,10 @@ export const userLogin = expressAsyncHandler(
       throw new AppError('invalid credentials', 401);
     }
 
+    if (isExistingUser.deletedAt) {
+      throw new AppError('invalid credentials', 401);
+    }
+
     if (!isExistingUser.password) {
       if (isExistingUser.googleId) {
         throw new AppError('Please login with Google.', 400);
@@ -139,6 +143,10 @@ export const sendVerificationEmail = expressAsyncHandler(
     const existingUser = await getUserByEmail(normalizedEmail);
 
     if (!existingUser) {
+      throw new AppError('Invalid credentials.', 401);
+    }
+
+    if (existingUser.deletedAt) {
       throw new AppError('Invalid credentials.', 401);
     }
 
@@ -193,6 +201,10 @@ export const verifyEmail = expressAsyncHandler(
       throw new AppError('User not found', 404);
     }
 
+    if (user.deletedAt) {
+      throw new AppError('User not found', 404);
+    }
+
     if (user.isVerified) {
       res.status(200).json({ message: 'Email is already verified.' });
       return;
@@ -215,6 +227,10 @@ export const sendResetPasswordEmail = expressAsyncHandler(
     const existingUserByEmail = await getUserByEmail(normalizedEmail);
 
     if (!existingUserByEmail) {
+      throw new AppError('Invalid credentials.', 409);
+    }
+
+    if (existingUserByEmail.deletedAt) {
       throw new AppError('Invalid credentials.', 409);
     }
 
