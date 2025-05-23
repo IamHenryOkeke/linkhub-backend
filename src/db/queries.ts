@@ -188,3 +188,133 @@ export async function deletePasswordResetToken(userId: string) {
     throw new AppError('Internal server error', 500);
   }
 }
+
+export async function getAllUserLinks(id: string) {
+  try {
+    const data = await prisma.link.findMany({
+      where: {
+        userId: id,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error getting all links:', error.message);
+    } else {
+      console.error('Error getting all links:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function getUserLinkById(id: string, userId: string) {
+  try {
+    const data = await prisma.link.findUnique({
+      where: {
+        id,
+        userId,
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error getting link:', error.message);
+    } else {
+      console.error('Error getting link:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function getUserLinkByUniqueUrl(userId: string, url: string) {
+  try {
+    const data = await prisma.link.findUnique({
+      where: {
+        userId_url: {
+          userId,
+          url,
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error getting link:', error.message);
+    } else {
+      console.error('Error getting link:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function createLink(values: Prisma.LinkCreateInput) {
+  try {
+    const data = await prisma.link.create({
+      data: values,
+      select: {
+        id: true,
+        title: true,
+        url: true,
+        imageUrl: true,
+        clickCount: true,
+        createdAt: true,
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error creating link:', error.message);
+    } else {
+      console.error('Error creating link:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function updateUserLink(
+  id: string,
+  userId: string,
+  values: Prisma.LinkUpdateInput,
+) {
+  try {
+    const data = await prisma.link.update({
+      where: { id, userId },
+      data: values,
+      select: {
+        id: true,
+        title: true,
+        url: true,
+        imageUrl: true,
+        clickCount: true,
+        createdAt: true,
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error updating link:', error.message);
+    } else {
+      console.error('Error updating link:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function deleteUserLink(id: string, userId: string) {
+  try {
+    const data = await prisma.link.delete({
+      where: { id, userId },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error deleting link:', error.message);
+    } else {
+      console.error('Error deleting link:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}

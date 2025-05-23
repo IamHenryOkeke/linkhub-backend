@@ -62,3 +62,27 @@ export const updateUserProfileSchema = z.object({
     .optional(),
   avatar: z.string().url({ message: 'Avatar must be a valid url' }).optional(),
 });
+
+export const createLinkSchema = z.object({
+  title: z
+    .string({ message: 'Link is required' })
+    .min(3, { message: 'Link must be at least 3 characters long' }),
+  description: z
+    .string({ message: 'Description is required' })
+    .min(3, { message: 'Description must be at least 3 characters long' }),
+  url: z.string().url({ message: 'URL must be a valid url' }),
+  imageUrl: z
+    .string()
+    .url({ message: 'Avatar must be a valid url' })
+    .optional(),
+});
+
+export const updateLinkSchema = createLinkSchema.partial().merge(
+  z.object({
+    isActive: z.boolean().optional(),
+  }),
+);
+
+export const linkParamSchema = z.object({
+  linkId: z.string().cuid(),
+});

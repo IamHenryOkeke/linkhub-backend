@@ -32,12 +32,19 @@ model User {
 }
 
 model Link {
-  id        String   @id @default(uuid())
-  title     String
-  url       String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  url         String
+  imageUrl    String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isActive    Boolean  @default(false)
+  clickCount  Int      @default(0)
+
+  @@unique([userId, url]) // each user can't add the same link twice
 }
 
 model PasswordResetToken {
