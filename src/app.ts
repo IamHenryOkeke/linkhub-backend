@@ -4,6 +4,7 @@ import { CustomError } from './lib/type';
 import dotenv from 'dotenv';
 import indexRouter from './routes/index.routes';
 import authRouter from './routes/auth.routes';
+import userRouter from './routes/user.routes';
 dotenv.config();
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(passport.initialize());
 
 // Use routes
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 app.use('/api', indexRouter);
 
 // 404 handler

@@ -113,6 +113,25 @@ export async function updateUser(id: string, values: Prisma.UserUpdateInput) {
   }
 }
 
+export async function deleteUser(id: string) {
+  try {
+    const data = await prisma.user.update({
+      where: { id },
+      data: {
+        deletedAt: new Date(),
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error deleting user:', error.message);
+    } else {
+      console.error('Error deleting user:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
 export async function createPasswordResetToken(
   values: Prisma.PasswordResetTokenCreateInput,
 ) {

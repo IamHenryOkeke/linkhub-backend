@@ -96,7 +96,10 @@ npm run dev
 | POST   | `/auth/reset-password`            | Reset user password with valid token    | No            |
 | GET    | `/auth/google`                    | Initiate Google OAuth login             | No            |
 | GET    | `/auth/google/callback`           | Google OAuth callback and JWT issuance  | No            |
-| GET    | `/user/profile`         | Get authenticated user profile        | Yes           |
+| GET    | `/user/view-profile`         | Get authenticated user profile        | 
+Yes           |
+| GET    | `/user/update-profile`         | Update user profile        | 
+Yes           |
 | POST   | `/links`                | Create a new link                     | Yes           |
 | GET    | `/links`                | Get all links for authenticated user  | Yes           |
 | PUT    | `/links/:id`            | Update an existing link               | Yes           |
