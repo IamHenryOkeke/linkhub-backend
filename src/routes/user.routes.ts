@@ -12,15 +12,16 @@ import { addFilePathToBody } from '../middlewares/addFilePathToBody';
 
 const userRouter = Router();
 
-userRouter.get('/profile', isAuthenticated, getCurrentUser);
+userRouter.use(isAuthenticated);
+
+userRouter.get('/profile', getCurrentUser);
 userRouter.put(
   '/profile',
-  isAuthenticated,
   upload.single('avatar'),
   addFilePathToBody('avatar'),
   validate({ body: updateUserProfileSchema }),
   updateCurrentUser,
 );
-userRouter.delete('/profile', isAuthenticated, deleteCurrentUser);
+userRouter.delete('/profile', deleteCurrentUser);
 
 export default userRouter;
