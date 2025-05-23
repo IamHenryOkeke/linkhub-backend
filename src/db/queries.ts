@@ -358,3 +358,59 @@ export async function getUserPublicProfileWithLinksByUsername(
     throw new AppError('Internal server error', 500);
   }
 }
+
+export async function getUserPublicLinkWithLinksByLinkId(id: string) {
+  try {
+    const data = await prisma.link.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        title: true,
+        url: true,
+        description: true,
+        imageUrl: true,
+        clickCount: true,
+        createdAt: true,
+        isActive: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            name: true,
+            bio: true,
+            avatar: true,
+          },
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error occurred while finding link by id:', error.message);
+    } else {
+      console.error('Error occurred while finding link by id:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}
+
+export async function updateUserPublicLinkWithLinksByLinkId(id: string) {
+  try {
+    const data = await prisma.link.update({
+      where: { id },
+      data: {
+        clickCount: {
+          increment: 1,
+        },
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error occurred while updating link by id:', error.message);
+    } else {
+      console.error('Error occurred while updating link by id:', error);
+    }
+    throw new AppError('Internal server error', 500);
+  }
+}

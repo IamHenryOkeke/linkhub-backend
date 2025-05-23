@@ -7,6 +7,7 @@ import authRouter from './routes/auth.routes';
 import userRouter from './routes/user.routes';
 import linkRouter from './routes/link.routes';
 import publicProfileRouter from './routes/publicProfile.routes';
+import visitLinkRouter from './routes/visitLink.routes';
 dotenv.config();
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api/links', linkRouter);
 app.use('/api/user', userRouter);
 app.use('/api', indexRouter);
 app.use('/u', publicProfileRouter);
+app.use('/v', visitLinkRouter);
 
 // 404 handler
 app.use((req, res) => {
