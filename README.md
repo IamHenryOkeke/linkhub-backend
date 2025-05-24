@@ -1,4 +1,4 @@
-# Linktree Clone Backend
+# LinkHub Backend
 
 A backend API for a Linktree-like service where users can create a profile page with multiple customizable links, enabling easy sharing of all social profiles or important links with a single URL.
 
