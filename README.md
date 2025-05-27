@@ -104,7 +104,8 @@ npm run dev
 | GET    | `/links/:linkId`                | Get all links for authenticated user  | Yes           |
 | PUT    | `/links/:linkId`            | Update an existing link               | Yes           |
 | DELETE | `/links/:linkId`            | Delete a link                         | Yes           |
-| GET    | `/:username`            | Public profile page with user’s links | No            |
+| GET    | `/u/:username`            | Public profile page with user’s links | No            |
+| GET    | `/v/:shortCode`            | Get user public link via link short code | No            |
 
 ---
 
