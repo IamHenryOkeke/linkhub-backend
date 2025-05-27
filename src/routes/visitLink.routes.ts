@@ -3,6 +3,6 @@ import { getUserPublicLink } from '../controllers/visitLink.controllers';
 
 const visitLinkRouter = Router();
 
-visitLinkRouter.get('/:linkId', getUserPublicLink);
+visitLinkRouter.get('/:shortCode', getUserPublicLink);
 
 export default visitLinkRouter;

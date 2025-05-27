@@ -10,6 +10,7 @@ import {
 } from '../db/queries';
 import { Request, Response } from 'express';
 import { AppError } from '../error/errorHandler';
+import createUniqueShortCode from '../lib/short-code';
 
 export const getCurrentUserLinks = expressAsyncHandler(
   async (req: Request, res: Response): Promise<void> => {
@@ -76,11 +77,14 @@ export const createUserLink = expressAsyncHandler(
       throw new AppError('You already added this link', 400);
     }
 
+    const shortCode = await createUniqueShortCode();
+
     const values = {
       title,
       description,
       url,
       ...(imageUrl && { imageUrl }),
+      shortCode,
       user: {
         connect: {
           id,

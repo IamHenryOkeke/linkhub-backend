@@ -336,9 +336,8 @@ export async function getUserPublicProfileWithLinksByUsername(
             isActive: true,
           },
           select: {
-            id: true,
             title: true,
-            url: true,
+            shortCode: true,
             description: true,
             imageUrl: true,
           },
@@ -359,28 +358,16 @@ export async function getUserPublicProfileWithLinksByUsername(
   }
 }
 
-export async function getUserPublicLinkWithLinksByLinkId(id: string) {
+export async function getUserPublicLinkByShortCode(shortCode: string) {
   try {
     const data = await prisma.link.findUnique({
-      where: { id },
+      where: { shortCode },
       select: {
         id: true,
         title: true,
         url: true,
-        description: true,
         imageUrl: true,
-        clickCount: true,
-        createdAt: true,
         isActive: true,
-        user: {
-          select: {
-            id: true,
-            username: true,
-            name: true,
-            bio: true,
-            avatar: true,
-          },
-        },
       },
     });
     return data;
@@ -394,7 +381,7 @@ export async function getUserPublicLinkWithLinksByLinkId(id: string) {
   }
 }
 
-export async function updateUserPublicLinkWithLinksByLinkId(id: string) {
+export async function updateUserPublicLinkByLinkId(id: string) {
   try {
     const data = await prisma.link.update({
       where: { id },

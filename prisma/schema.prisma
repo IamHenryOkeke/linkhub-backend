@@ -37,6 +37,7 @@ model Link {
   description String
   url         String
   imageUrl    String?
+  shortCode   String @unique 
   userId      String
   user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
